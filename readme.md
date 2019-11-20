@@ -1,9 +1,4 @@
-## learning about terraform
-
-The following terraform builds the following 
-- 
-
-
+## Building stuff With Terraform
 
 
 
