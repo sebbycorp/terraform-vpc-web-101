@@ -20,4 +20,5 @@ module "webapp" {
   # pass web security group and public networks
   sg_web = "${module.core_infra.sg_web}"
   sn_web = "${module.core_infra.sn_pub1}"
+  sn_web2 = "${module.core_infra.sn_pub2}"
 }
