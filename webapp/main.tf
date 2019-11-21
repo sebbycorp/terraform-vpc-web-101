@@ -5,4 +5,5 @@ module "instances" {
   sn_web2 = "${var.sn_web2}"
   sn_web3 = "${var.sn_web3}"
   key_name = "${var.key_name}"
+  sg_alb = "${var.sg_alb}"
 }

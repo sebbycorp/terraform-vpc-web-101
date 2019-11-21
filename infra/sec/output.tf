@@ -4,3 +4,6 @@ output "sg_web" {
 output "sg_db" {
   value = "${aws_security_group.infra-database.id}"
 }
+output "sg_alb" {
+  value = "${aws_security_group.infra-alb.id}"
+}

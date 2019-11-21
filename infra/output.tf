@@ -27,3 +27,6 @@ output "sg_web" {
 output "sg_db" {
   value = "${module.security.sg_db}"
 }
+output "sg_alb" {
+  value = "${module.security.sg_alb}"
+}

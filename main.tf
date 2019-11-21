@@ -22,4 +22,5 @@ module "webapp" {
   sn_web  = "${module.core_infra.sn_pub1}"
   sn_web2 = "${module.core_infra.sn_pub2}"
   sn_web3 = "${module.core_infra.sn_pub3}"
+  sg_alb  = "${module.core_infra.sg_alb}"
 }
