@@ -1,6 +1,7 @@
 variable "profile" {}
 variable "region" {}
 variable "sg_web" {}
+variable "sg_consul" {}
 variable "sn_web" {}
 variable "sg_alb" {}
 variable "sn_web2" {}

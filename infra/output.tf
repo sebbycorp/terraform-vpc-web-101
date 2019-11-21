@@ -30,3 +30,6 @@ output "sg_db" {
 output "sg_alb" {
   value = "${module.security.sg_alb}"
 }
+output "sg_consul" {
+  value = "${module.security.sg_consul}"
+}
