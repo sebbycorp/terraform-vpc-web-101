@@ -58,4 +58,3 @@ vpc_security_group_ids = [
     "Site" = "infra-web-site"
   }
 }
-resource "aws_alb" 
