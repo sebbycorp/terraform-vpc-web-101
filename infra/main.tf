@@ -3,5 +3,5 @@ module "network" {
 }
 module "security" {
   source = "./sec"
-  vpc_id = "${module.network.vpc}"
+  vpc_id = "module.network.vpc"
 }
