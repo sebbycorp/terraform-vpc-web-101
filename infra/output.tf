@@ -8,11 +8,17 @@ output "sn_pub1" {
 output "sn_pub2" {
   value = "${module.network.sn_pub2}"
 }
+output "sn_pub3" {
+  value = "${module.network.sn_pub3}"
+}
 output "sn_priv1" {
   value = "${module.network.sn_priv1}"
 }
 output "sn_priv2" {
   value = "${module.network.sn_priv2}"
+}
+output "sn_priv3" {
+  value = "${module.network.sn_priv3}"
 }
 # Sec module output
 output "sg_web" {

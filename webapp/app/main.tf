@@ -43,3 +43,19 @@ vpc_security_group_ids = [
     "Site" = "infra-web-site"
   }
 }
+resource "aws_instance" "nginx3" {
+  ami           = "${data.aws_ami.nginx.id}"
+  instance_type = "t2.micro"
+  key_name      = "${var.key_name}"
+  subnet_id     = "${var.sn_web3}"
+  user_data     = "${file("${path.module}/nginx.sh")}"
+  associate_public_ip_address = true
+vpc_security_group_ids = [
+    "${var.sg_web}",
+  ]
+  tags = {
+    "Name" = "infra-webserver3"
+    "Site" = "infra-web-site"
+  }
+}
+resource "aws_alb" 

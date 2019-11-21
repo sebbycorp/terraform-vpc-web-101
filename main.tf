@@ -1,16 +1,16 @@
 #### VARIABLES
 variable "profile" {
-  default ="default"
+  default = "default"
 }
 variable "region" {
-  default ="us-east-1"
+  default = "us-east-1"
 }
 variable "key_name" {
   default = "aws-key-sebby"
 }
 #### CALL MDOULES
 module "core_infra" {
-  source  = "./infra"
+  source = "./infra"
 }
 module "webapp" {
   source   = "./webapp"
@@ -18,7 +18,8 @@ module "webapp" {
   region   = "${var.region}"
   key_name = "${var.key_name}"
   # pass web security group and public networks
-  sg_web = "${module.core_infra.sg_web}"
-  sn_web = "${module.core_infra.sn_pub1}"
+  sg_web  = "${module.core_infra.sg_web}"
+  sn_web  = "${module.core_infra.sn_pub1}"
   sn_web2 = "${module.core_infra.sn_pub2}"
+  sn_web3 = "${module.core_infra.sn_pub3}"
 }
