@@ -14,14 +14,14 @@ data "aws_ami" "nginx" {
   owners = ["099720109477"] # Canonical
 }
 resource "aws_instance" "nginx1" {
-  ami           = "data.aws_ami.nginx.id"
+  ami           = "${data.aws_ami.nginx.id}"
   instance_type = "t2.micro"
-  key_name      = "var.key_name"
-  subnet_id     = "var.sn_web"
+  key_name      = "${var.key_name}"
+  subnet_id     = "${var.sn_web}"
   user_data     = "${file("${path.module}/nginx.sh")}"
   associate_public_ip_address = true
 vpc_security_group_ids = [
-    "var.sg_web",
+    "${var.sg_web}",
   ]
   tags = {
     "Name" = "infra-webserver"
@@ -29,14 +29,14 @@ vpc_security_group_ids = [
   }
 }
 resource "aws_instance" "nginx2" {
-  ami           = "data.aws_ami.nginx.id"
+  ami           = "${data.aws_ami.nginx.id}"
   instance_type = "t2.micro"
-  key_name      = "var.key_name"
-  subnet_id     = "var.sn_web2"
+  key_name      = "${var.key_name}"
+  subnet_id     = "${var.sn_web2}"
   user_data     = "${file("${path.module}/nginx.sh")}"
   associate_public_ip_address = true
 vpc_security_group_ids = [
-    "var.sg_web",
+    "${var.sg_web}",
   ]
   tags = {
     "Name" = "infra-webserver2"
@@ -44,14 +44,14 @@ vpc_security_group_ids = [
   }
 }
 resource "aws_instance" "nginx3" {
-  ami           = "data.aws_ami.nginx.id"
+  ami           = "${data.aws_ami.nginx.id}"
   instance_type = "t2.micro"
-  key_name      = "var.key_name}"
-  subnet_id     = "var.sn_web3"
+  key_name      = "${var.key_name}"
+  subnet_id     = "${var.sn_web3}"
   user_data     = "${file("${path.module}/nginx.sh")}"
   associate_public_ip_address = true
 vpc_security_group_ids = [
-    "var.sg_web",
+    "${var.sg_web}",
   ]
   tags = {
     "Name" = "infra-webserver3"

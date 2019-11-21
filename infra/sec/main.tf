@@ -1,7 +1,7 @@
 resource "aws_security_group" "infra-webserver" {
   name        = "webserver"
   description = "Allow HTTP from Anywhere"
-  vpc_id      = "var.vpc_id"
+  vpc_id      = "${var.vpc_id}"
   ingress {
     from_port   = 80
     to_port     = 80
@@ -28,7 +28,7 @@ resource "aws_security_group" "infra-webserver" {
 resource "aws_security_group" "infra-consul" {
   name        = "consul"
   description = "Allow consul from Anywhere"
-  vpc_id      = "var.vpc_id"
+  vpc_id      = "${var.vpc_id}"
   ingress {
     from_port   = 80
     to_port     = 80
@@ -73,12 +73,12 @@ resource "aws_security_group" "infra-consul" {
 resource "aws_security_group" "infra-database" {
   name        = "database"
   description = "Allow infraSQL/Aurora from WebService"
-  vpc_id      = "var.vpc_id"
+  vpc_id      = "${var.vpc_id}"
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = ["aws_security_group.infra-webserver.id"]
+    security_groups = ["${aws_security_group.infra-webserver.id}"]
     self            = false
   }
   egress {
@@ -95,7 +95,7 @@ resource "aws_security_group" "infra-database" {
 resource "aws_security_group" "infra-alb" {
   name        = "applb"
   description = "Allow ALB"
-  vpc_id      = "var.vpc_id"
+  vpc_id      = "${var.vpc_id}"
   ingress {
     from_port       = 80
     to_port         = 80
