@@ -33,3 +33,6 @@ output "sg_alb" {
 output "sg_consul" {
   value = "${module.security.sg_consul}"
 }
+output "sg_vault" {
+  value = "${module.security.sg_vault}"
+}
