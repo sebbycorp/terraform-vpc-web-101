@@ -8,65 +8,79 @@ local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 sudo apt-get install unzip
 
 #Download Consul
-CONSUL_VERSION="1.6.2"
-curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
+VAULT_VERSION="1.3.0"
+curl --silent --remote-name https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip
+curl --silent --remote-name https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_SHA256SUMS
+curl --silent --remote-name https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_SHA256SUMS.sig
 
 #Install Consul
-unzip consul_${CONSUL_VERSION}_linux_amd64.zip
-sudo chown root:root consul
-sudo mv consul /usr/local/bin/
-consul -autocomplete-install
-complete -C /usr/local/bin/consul consul
+unzip vault_${VAULT_VERSION}_linux_amd64.zip
+sudo chown root:root vault
+sudo mv vault /usr/local/bin/
+vault --version
 
-#Create Consul User
-sudo useradd --system --home /etc/consul.d --shell /bin/false consul
-sudo mkdir --parents /opt/consul
-sudo chown --recursive consul:consul /opt/consul
+#install
+vault -autocomplete-install
+complete -C /usr/local/bin/vault vault
+
+#Give Vault the ability to use the mlock syscall without running the process as root. The mlock syscall prevents memory from being swapped to disk.
+sudo setcap cap_ipc_lock=+ep /usr/local/bin/vault
+
+#Create a unique, non-privileged system user to run Vault.
+sudo useradd --system --home /etc/vault.d --shell /bin/false vault
 
 #Create Systemd Config
-sudo cat << EOF > /etc/systemd/system/consul.service
+
+
+sudo cat << EOF > /etc/systemd/system/vault.service
 [Unit]
-Description="HashiCorp Consul - A service mesh solution"
-Documentation=https://www.consul.io/
+Description="HashiCorp Vault - A tool for managing secrets"
+Documentation=https://www.vaultproject.io/docs/
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty=/etc/consul.d/consul.hcl
+ConditionFileNotEmpty=/etc/vault.d/vault.hcl
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
-User=consul
-Group=consul
-ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/
-ExecReload=/usr/local/bin/consul reload
+User=vault
+Group=vault
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+SecureBits=keep-caps
+AmbientCapabilities=CAP_IPC_LOCK
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+NoNewPrivileges=yes
+ExecStart=/usr/local/bin/vault server -config=/etc/vault.d/vault.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
-Restart=always
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StartLimitInterval=60
+StartLimitIntervalSec=60
+StartLimitBurst=3
 LimitNOFILE=65536
+LimitMEMLOCK=infinity
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
+
+
+
 #Create config dir
-sudo mkdir --parents /etc/consul.d
-sudo touch /etc/consul.d/consul.hcl
-sudo chown --recursive consul:consul /etc/consul.d
-sudo chmod 640 /etc/consul.d/consul.hcl
-
-cat << EOF > /etc/consul.d/consul.hcl
-datacenter = "dc1"
-data_dir = "/opt/consul"
-
-ui = true
-EOF
-
-cat << EOF > /etc/consul.d/server.hcl
-server = true
-bootstrap_expect = 1
-
-client_addr = "0.0.0.0"
-retry_join = ["provider=aws tag_key=Env tag_value=consul"]
-EOF
+sudo mkdir --parents /etc/vault.d
+sudo touch /etc/vault.d/vault.hcl
+sudo chown --recursive vault:vault /etc/vault.d
+sudo chmod 640 /etc/vault.d/vault.hcl
 
 #Enable the service
-sudo systemctl enable consul
-sudo service consul start
-sudo service consul status
+sudo systemctl enable vault
+sudo systemctl start vault
+sudo systemctl status vault

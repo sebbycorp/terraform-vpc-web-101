@@ -21,5 +21,5 @@ module "vaultinstances" {
   sn_web2 = "${var.sn_web2}"
   sn_web3 = "${var.sn_web3}"
   key_name = "${var.key_name}"
-  sg_consul = "${var.sg_vault}"
+  sg_vault = "${var.sg_vault}"
 }
