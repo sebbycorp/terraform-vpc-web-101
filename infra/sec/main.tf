@@ -48,6 +48,36 @@ resource "aws_security_group" "infra-consul" {
     cidr_blocks = ["0.0.0.0/0"]
   }
         ingress {
+    from_port   = 8301
+    to_port     = 8301
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+          ingress {
+    from_port   = 8302
+    to_port     = 8302
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+          ingress {
+    from_port   = 8301
+    to_port     = 8301
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+          ingress {
+    from_port   = 8302
+    to_port     = 8302
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+          ingress {
+    from_port   = 8300
+    to_port     = 8300
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+        ingress {
     from_port   = 8600
     to_port     = 8600
     protocol    = "udp"

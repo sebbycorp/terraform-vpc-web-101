@@ -77,8 +77,9 @@ cat << EOF > /etc/consul.d/server.hcl
 server = true
 bootstrap_expect = 3
 ui = true
-
 client_addr = "0.0.0.0"
+retry_join = ["provider=aws tag_key=Env tag_value=consul"]
+
 EOF
 
 #Enable the service

@@ -1,20 +1,17 @@
+#Deploying consul
 
-cat << EOF > /etc/consul.d/consul.hcl
-datacenter = "us-east-1-dc1"
-data_dir = "/opt/consul"
+log into the consul servers and get consul key gen
 
-ui = true
-EOF
+input the keygen into sudo vi /etc/consul.d/server.hcl 
+encyrpt = "asdfasdf"
 
-cat << EOF > /etc/consul.d/server.hcl
-server = true
-bootstrap_expect = 1
+consul join 10.0.2.102 10.0.1.202 10.0.5.196
 
-client_addr = "0.0.0.0"
 retry_join = ["provider=aws tag_key=Env tag_value=consul"]
-EOF
 
-#Enable the service
-sudo systemctl enable consul
-sudo service consul start
-sudo service consul status
+consul agent -retry-join "provider=aws tag_key=Env tag_value=consul"
+
+consul join "provider=aws tag_key=infra-consul2 tag_value=infra-consul1 tag_value=infra-consul3"
+
+
+

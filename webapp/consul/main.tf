@@ -26,6 +26,7 @@ vpc_security_group_ids = [
   tags = {
     "Name" = "infra-consul1"
     "Site" = "infra-consul1-site"
+    "Env" = "consul"
   }
 }
 resource "aws_instance" "consul2" {
@@ -41,6 +42,7 @@ vpc_security_group_ids = [
   tags = {
     "Name" = "infra-consul2"
     "Site" = "infra-consul2-site"
+    "Env" = "consul"
   }
 }
 resource "aws_instance" "consul3" {
@@ -56,5 +58,6 @@ vpc_security_group_ids = [
   tags = {
     "Name" = "infra-consul3"
     "Site" = "infra-consul3-site"
+    "Env" = "consul"
   }
 }
