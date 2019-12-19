@@ -5,6 +5,8 @@ local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 
 
 #Utils
+sudo apt-get update
+sudo apt-get install awscli
 sudo apt-get install unzip
 
 #Download Consul
@@ -78,7 +80,6 @@ server = true
 bootstrap_expect = 3
 ui = true
 client_addr = "0.0.0.0"
-retry_join = ["provider=aws tag_key=Env tag_value=consul"]
 
 EOF
 

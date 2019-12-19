@@ -13,5 +13,13 @@ consul agent -retry-join "provider=aws tag_key=Env tag_value=consul"
 
 consul join "provider=aws tag_key=infra-consul2 tag_value=infra-consul1 tag_value=infra-consul3"
 
+consul agent \
+ -retry-join "provider=aws tag_key=Env tag_value=consul"
 
-
+{
+ "service": {
+ "name": "my-service",
+ "tags": ["tag-1", "tag-2"],
+ "port": 1234
+ }
+}
