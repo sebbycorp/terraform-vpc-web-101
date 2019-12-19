@@ -5,7 +5,7 @@ log into the consul servers and get consul key gen
 input the keygen into sudo vi /etc/consul.d/server.hcl 
 encyrpt = "asdfasdf"
 
-consul join 10.0.2.102 10.0.1.202 10.0.5.196
+consul join 10.0.2.25 10.0.1.184 10.0.5.147
 
 retry_join = ["provider=aws tag_key=Env tag_value=consul"]
 

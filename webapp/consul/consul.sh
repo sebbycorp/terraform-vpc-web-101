@@ -68,6 +68,7 @@ performance {
   raft_multiplier = 1
 }
 EOF
+
 #Server build
 sudo mkdir --parents /etc/consul.d
 sudo touch /etc/consul.d/server.hcl
@@ -78,9 +79,9 @@ sudo chmod 640 /etc/consul.d/server.hcl
 cat << EOF > /etc/consul.d/server.hcl
 server = true
 bootstrap_expect = 3
+
 ui = true
 client_addr = "0.0.0.0"
-
 EOF
 
 #Enable the service
