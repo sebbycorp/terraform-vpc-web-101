@@ -6,7 +6,7 @@ variable "region" {
   default = "us-east-1"
 }
 variable "key_name" {
-  default = "aws-key-sebby"
+  default = "maniak.io.key"
 }
 #### CALL MDOULES
 module "core_infra" {
